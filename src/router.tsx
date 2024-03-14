@@ -5,6 +5,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import GuestLayout from './layouts/GuestLayout'
 import LoginPage from './components/LoginPage'
 import NotFoundPage from './components/NotFoundPage'
+import RegisterPage from './components/RegisterPage'
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,14 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/',
+        element: <Navigate to='/login' />,
+      },
+      {
+        path: '/register',
+        element: <RegisterPage />,
       },
     ],
   },
