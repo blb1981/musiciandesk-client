@@ -23,8 +23,8 @@ const LoginPage = () => {
 
     try {
       // Set cookie
-      const responseFromCookie = await apiClient.get('/')
-      console.log(responseFromCookie)
+      await apiClient.get('/')
+      console.log('Cookie set')
 
       // Attempt login
       const response = await apiClient.post('/login', payload)

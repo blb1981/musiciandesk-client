@@ -10,3 +10,12 @@ export interface RegisterInfo {
   password: string
   password_confirmation: string
 }
+
+export interface User {
+  created_at?: Date
+  email?: string
+  email_verified_at?: Date
+  id?: number
+  name?: string
+  updated_at?: Date
+}

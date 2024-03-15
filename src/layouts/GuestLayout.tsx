@@ -3,8 +3,10 @@ import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import getMe from '../api/getMe'
 import { isAxiosError } from 'axios'
+import { useStateContext } from '../contexts/StateContext'
 
 const GuestLayout = () => {
+  const { setUser } = useStateContext()
   const navigate = useNavigate()
   const [isPageLoading, setIsPageLoading] = useState(true)
 
@@ -22,8 +24,9 @@ const GuestLayout = () => {
             console.log('Logged in, not verified, redirecting to dashboard.')
             navigate('/dashboard')
           }
-          // If not logged do nothing
+          // If not logged do nothing except set user to empty object
           console.log('Not logged in. Please login or register.')
+          setUser({})
         }
       } finally {
         setIsPageLoading(false)

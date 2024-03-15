@@ -4,9 +4,11 @@ import { isAxiosError } from 'axios'
 
 import apiClient from '../api/axios'
 import getMe from '../api/getMe'
+import { useStateContext } from '../contexts/StateContext'
 
 const DefaultLayout = () => {
   const navigate = useNavigate()
+  const { setUser, user } = useStateContext()
   const [isPageLoading, setIsPageLoading] = useState(true)
   const [isProcessingLogout, setIsProcessingLogout] = useState(false)
   const [isVerified, setIsVerified] = useState<null | boolean>(null)
@@ -21,9 +23,10 @@ const DefaultLayout = () => {
       const response = await apiClient.post('/logout')
       console.log(response)
 
-      // If successful, redirect to /login
+      // If successful, reset user context, redirect to /login
       if (response.status === 204) {
         console.log('Logout successful')
+        setUser({})
         navigate('/login')
       }
     } catch (error) {
@@ -53,14 +56,18 @@ const DefaultLayout = () => {
   useEffect(() => {
     const checkIfLoggedIn = async () => {
       try {
-        await getMe()
+        const { data } = await getMe()
         // If logged in, and verified, set verified to true
         console.log('Logged in, verified, proceed')
         setIsVerified(true)
+
+        // Set user data context
+        setUser(data)
       } catch (error) {
         if (isAxiosError(error)) {
           // If logged in, but email not verified, display verification notice
           if (error.response?.status === 409) {
+            console.log(error)
             setIsVerified(false)
           } else {
             // If not logged in redirect to login page
@@ -98,6 +105,8 @@ const DefaultLayout = () => {
     </div>
   )
 
+  console.log('user', user)
+
   return (
     !isPageLoading && (
       <div>
@@ -105,6 +114,8 @@ const DefaultLayout = () => {
         <button onClick={handleLogout} disabled={isProcessingLogout}>
           Logout
         </button>
+        {user && <p>Hello {user?.name}!</p>}
+
         {isVerified ? <Outlet /> : notVerifiedContent}
       </div>
     )
