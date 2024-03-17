@@ -19,3 +19,12 @@ export interface User {
   name?: string
   updated_at?: Date
 }
+
+export interface Project {
+  created_at?: Date
+  id?: number
+  name: string
+  due_date: Date
+  is_complete: boolean
+  updated_at?: Date
+}

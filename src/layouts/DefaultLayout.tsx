@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, Link } from 'react-router-dom'
 import { isAxiosError } from 'axios'
 
 import apiClient from '../api/axios'
@@ -105,15 +105,22 @@ const DefaultLayout = () => {
     </div>
   )
 
-  console.log('user', user)
-
   return (
     !isPageLoading && (
       <div>
         <div>DefaultLayout</div>
-        <button onClick={handleLogout} disabled={isProcessingLogout}>
-          Logout
-        </button>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <button onClick={handleLogout} disabled={isProcessingLogout}>
+            Logout
+          </button>
+          <Link to='/projects/create'>New Project</Link>
+        </div>
         {user && <p>Hello {user?.name}!</p>}
 
         {isVerified ? <Outlet /> : notVerifiedContent}

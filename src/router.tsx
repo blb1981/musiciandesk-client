@@ -5,7 +5,9 @@ import DefaultLayout from './layouts/DefaultLayout'
 import GuestLayout from './layouts/GuestLayout'
 import LoginPage from './components/LoginPage'
 import NotFoundPage from './components/NotFoundPage'
+import ProjectsIndexPage from './components/ProjectsIndexPage'
 import RegisterPage from './components/RegisterPage'
+import ProjectsFormPage from './components/ProjectsFormPage'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Navigate to='/dashboard' />,
+      },
+      {
+        path: '/projects',
+        element: <ProjectsIndexPage />,
+      },
+      {
+        path: '/projects/create',
+        element: <ProjectsFormPage />,
       },
     ],
   },
